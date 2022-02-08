@@ -1,15 +1,8 @@
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration
-} from "remix";
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "remix";
 import type { MetaFunction } from "remix";
 
 export const meta: MetaFunction = () => {
-  return { title: "New Remix App" };
+  return { title: "Package Lock Explorer" };
 };
 
 export default function App() {
