@@ -1,24 +1,39 @@
+import { useCallback } from "react";
+import Dropzone from "react-dropzone";
+import styles from "~/styles/index.css";
+
+export function links() {
+  return [{ rel: "stylesheet", href: styles }];
+}
+
 export default function Index() {
+  const onDrop = useCallback((acceptedFiles) => {
+    acceptedFiles.forEach((file: File) => {
+      const reader = new FileReader();
+
+      reader.onabort = () => console.log("file reading was aborted");
+      reader.onerror = () => console.log("file reading has failed");
+      reader.onload = () => {
+        if (!reader.result) {
+          throw "no content";
+        }
+        const json = JSON.parse(reader.result as string);
+        console.log(json);
+      };
+      reader.readAsText(file, "utf8");
+    });
+  }, []);
+
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a target="_blank" href="https://remix.run/tutorials/blog" rel="noreferrer">
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/tutorials/jokes" rel="noreferrer">
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
-    </div>
+    <Dropzone onDrop={onDrop}>
+      {({ getRootProps, getInputProps }) => (
+        <section className="dropzone">
+          <div className="dropzone-inner" {...getRootProps()}>
+            <input {...getInputProps()} />
+            <p>Drag 'n' drop some files here, or click to select files</p>
+          </div>
+        </section>
+      )}
+    </Dropzone>
   );
 }
