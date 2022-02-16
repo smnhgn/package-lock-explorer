@@ -1,5 +1,10 @@
-import { useCallback } from "react";
+import _ from "lodash";
+import { useCallback, useState } from "react";
 import Dropzone from "react-dropzone";
+import ReactFlow from "react-flow-renderer";
+
+import { useGraphElements } from "~/hooks/useGraphElements";
+import { PackageLock } from "~/types/package-lock";
 import styles from "~/styles/index.css";
 
 export function links() {
@@ -7,6 +12,9 @@ export function links() {
 }
 
 export default function Index() {
+  const [packageLock, setPackageLock] = useState<PackageLock>();
+  const graphElements = useGraphElements(packageLock);
+
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file: File) => {
       const reader = new FileReader();
@@ -18,13 +26,13 @@ export default function Index() {
           throw "no content";
         }
         const json = JSON.parse(reader.result as string);
-        console.log(json);
+        setPackageLock(json);
       };
       reader.readAsText(file, "utf8");
     });
   }, []);
 
-  return (
+  return _.isEmpty(packageLock) ? (
     <Dropzone onDrop={onDrop}>
       {({ getRootProps, getInputProps }) => (
         <section className="dropzone">
@@ -35,5 +43,9 @@ export default function Index() {
         </section>
       )}
     </Dropzone>
+  ) : (
+    <div className="react-flow-container">
+      <ReactFlow elements={graphElements} />
+    </div>
   );
 }
