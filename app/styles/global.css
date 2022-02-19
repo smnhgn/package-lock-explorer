@@ -10,11 +10,20 @@ body {
 html,
 body {
   height: 100%;
+  font-size: 14px;
   font-family: "Open Sans", sans-serif;
+  color: #eeeeee;
 }
 
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+:root {
+  --ple-color-primary: #93e4c1;
+  --ple-color-secondary: #3baea0;
+  --ple-color-tertiary: #118a7e;
+  --ple-color-quaternary: #1f6f78;
 }

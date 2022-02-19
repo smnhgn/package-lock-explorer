@@ -31,6 +31,9 @@ export const useGraphElements = (packageLock?: PackageLock): (Node | Edge)[] => 
         sourcePosition: Position.Right,
         draggable: false,
         connectable: false,
+        style: {
+          fontWeight: "bold",
+        },
       };
       const edges = _.chain(dependencies)
         .entries()
@@ -39,6 +42,10 @@ export const useGraphElements = (packageLock?: PackageLock): (Node | Edge)[] => 
           source: packageId,
           target: depName,
           type: "smoothstep",
+          style: {
+            stroke: "#ffffff",
+            strokeWidth: 1.5,
+          },
         }))
         .value();
 

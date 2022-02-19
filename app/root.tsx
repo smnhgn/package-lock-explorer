@@ -1,9 +1,11 @@
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "remix";
 import type { MetaFunction } from "remix";
 import styles from "./styles/global.css";
+import { Header, links as headerLinks } from "./components/Header";
 
 export function links() {
   return [
+    ...headerLinks(),
     { rel: "stylesheet", href: styles },
     { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" },
   ];
@@ -23,6 +25,7 @@ export default function App() {
         <Links />
       </head>
       <body>
+        <Header />
         <Outlet />
         <ScrollRestoration />
         <Scripts />

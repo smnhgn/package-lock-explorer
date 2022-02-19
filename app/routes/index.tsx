@@ -5,7 +5,7 @@ import ReactFlow from "react-flow-renderer";
 
 import { useGraphElements } from "~/hooks/useGraphElements";
 import { PackageLock } from "~/types/package-lock";
-import styles from "~/styles/index.css";
+import styles from "~/styles/routes/index.css";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -32,20 +32,24 @@ export default function Index() {
     });
   }, []);
 
-  return _.isEmpty(packageLock) ? (
-    <Dropzone onDrop={onDrop}>
-      {({ getRootProps, getInputProps }) => (
-        <section className="dropzone">
-          <div className="dropzone-inner" {...getRootProps()}>
-            <input {...getInputProps()} />
-            <p>Drag 'n' drop some files here, or click to select files</p>
-          </div>
-        </section>
+  return (
+    <main>
+      {_.isEmpty(packageLock) ? (
+        <Dropzone onDrop={onDrop}>
+          {({ getRootProps, getInputProps }) => (
+            <section className="dropzone">
+              <div className="dropzone-inner" {...getRootProps()}>
+                <input {...getInputProps()} />
+                <p>drop your package-lock.json</p>
+              </div>
+            </section>
+          )}
+        </Dropzone>
+      ) : (
+        <div className="react-flow-container">
+          <ReactFlow elements={graphElements}></ReactFlow>
+        </div>
       )}
-    </Dropzone>
-  ) : (
-    <div className="react-flow-container">
-      <ReactFlow elements={graphElements} />
-    </div>
+    </main>
   );
 }
