@@ -3,7 +3,10 @@ import type { MetaFunction } from "remix";
 import styles from "./styles/global.css";
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }];
+  return [
+    { rel: "stylesheet", href: styles },
+    { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" },
+  ];
 }
 
 export const meta: MetaFunction = () => {
